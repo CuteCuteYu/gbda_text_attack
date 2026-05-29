@@ -592,18 +592,18 @@ $$
 
 ```mermaid
 flowchart LR
-    subgraph 高温 τ≫1
-        H1["θ_i + g"] --> H2["÷τ (缩得很小)"]
-        H2 --> H3["exp(很小) 各值差别不大"]
+    subgraph Hot["高温 tau >> 1"]
+        H1["theta_i + g"] --> H2["除以 tau (缩得很小)"]
+        H2 --> H3["exp 值很小, 各值差别不大"]
         H3 --> H4["Softmax 输出接近均匀分布"]
-        H4 --> H5["← 每个词都有机会被选中"]
+        H4 --> H5["每个词都有机会被选中"]
     end
 
-    subgraph 低温 τ≪1
-        L1["θ_i + g"] --> L2["÷τ (放得很大)"]
-        L2 --> L3["exp(很大) 最大值主导一切"]
+    subgraph Cold["低温 tau << 1"]
+        L1["theta_i + g"] --> L2["除以 tau (放得很大)"]
+        L2 --> L3["exp 值很大, 最大值主导一切"]
         L3 --> L4["Softmax 输出接近 one-hot"]
-        L4 --> L5["← 只有最高分词汇被选中"]
+        L4 --> L5["只有最高分词汇被选中"]
     end
 
     style H5 fill:#fff3e0
