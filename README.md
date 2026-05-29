@@ -337,13 +337,13 @@ $$
 
 ```mermaid
 flowchart LR
-    subgraph 非定向攻击
-        ND["𝒍 = −CE(𝒇(𝒙'), 𝒚_true)<br/>最小化负交叉熵<br/>= 最大化真实标签的损失"]
-        ND_R["效果：把预测推离真实标签<br/>至于推到哪类无所谓"]
+    subgraph ND_sub["非定向攻击"]
+        ND["L = -CE(f(x), y_true)<br/>最小化负交叉熵<br/>= 最大化真实标签的损失"]
+        ND_R["效果: 把预测推离真实标签, 推到哪类无所谓"]
     end
-    subgraph 定向攻击
-        D["𝒍 = CE(𝒇(𝒙'), 𝒚_target)<br/>最小化目标类别的交叉熵"]
-        D_R["效果：把预测拉向目标标签<br/>必须推到指定类别"]
+    subgraph D_sub["定向攻击"]
+        D["L = CE(f(x), y_target)<br/>最小化目标类别的交叉熵"]
+        D_R["效果: 把预测拉向目标标签, 必须推到指定类别"]
     end
 
     style ND fill:#ff6b6b,color:#fff
@@ -374,13 +374,13 @@ flowchart LR
 ##### 用负对数似然（NLL）实现
 
 $$
-\mathcal{L}_{\text{reg}} = -\log P_\theta(y_{\text{orig}}) = -\sum_{i=1}^{L} \mathbb{I}_{y_i \neq \text{PAD}} \cdot \log P_{\theta_i}(y_i)
+\mathcal{L}_{\text{reg}} = -\log P_\theta(y_{\text{orig}}) = -\sum_{i=1}^{L} \mathbf{1}_{\{y_i \neq \text{PAD}\}} \cdot \log P_{\theta_i}(y_i)
 $$
 
 其中：
 
 - $P_{\theta_i}(y_i) = \text{Softmax}(\theta_i / \tau)$：第 $i$ 个位置上对抗分布赋予原始 token $y_i$ 的概率
-- $\mathbb{I}_{y_i \neq \text{PAD}}$：排除填充位（PAD token 没有语义，不需要约束）
+- $\mathbf{1}_{\{y_i \neq \text{PAD}\}}$：排除填充位（PAD token 没有语义，不需要约束）
 
 > **💡 直观理解**
 >
